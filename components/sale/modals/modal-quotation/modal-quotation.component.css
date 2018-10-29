@@ -1,0 +1,192 @@
+.card-header {
+    color: #007bff;
+    text-decoration: underline;
+}
+
+.tablappal {
+    border: 1px solid #85AF5D !important;
+    width: 280px;
+    margin: 0px auto !important;
+    /*line-height:30px !important;*/
+    /*line-height:48px;*/
+    font-size: 1px !important;
+}
+
+.tablasec td {
+    border: 1px dotted #000 !important;
+    background: #fff !important;
+    /*line-height:30px !important;*/
+    line-height: 25%;
+    font-size: 1px !important;
+    overflow: hidden;
+}
+
+/* .btn-outline-primary{
+    width: 100%;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #495057;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
+} */
+
+/*-----------------Service page style-------------------*/
+
+.service_box {
+    width: 100%;
+    float: left;
+    clear: both;
+    padding: 0 0 5px 0;
+    margin: 0 0 10px 0;
+}
+
+.services_icon {
+    padding: 6% 0;
+    width: 28%;
+    height: auto;
+    float: left;
+    display: block;
+    text-align: center;
+}
+
+.services_icon img {
+    display: block;
+    max-width: 70%;
+    margin: auto;
+}
+
+.service_content {
+    float: left;
+    width: 67%;
+    padding: 0 0 0 4%;
+}
+
+.service_content h4 {
+    padding: 0px 0 10px 0;
+}
+
+/* CSS Media Queries
+/*-----------------------------------------------------------------------------------*/
+
+@media screen and (max-width: 800px) {
+    .swiper-container {
+        width: 100%;
+    }
+    .services_icon {
+        padding: 4.5% 0;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .round_img {
+        padding: 15% 0px;
+    }
+    ul.social li {
+        padding: 6% 0;
+    }
+    .services_icon {
+        padding: 4.3% 0;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .services_icon {
+        padding: 4.5% 0;
+    }
+    #tablappal {
+        height: 95px;
+    }
+    .table_section {
+        font-size: 12px !important;
+    }
+    .table_section_small {
+        font-size: 8px;
+        line-height: 11px;
+        padding: 5px 0 0 2%;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .borders ul li {
+        padding: 4% 0.1%;
+        width: 27%;
+    }
+}
+
+@media screen and (mix-width: 361px) and (max-width: 480px) {
+    #tablappal {
+        height: 130px;
+    }
+}
+
+@media screen and (mix-width: 480px) and (max-width: 1000px) {
+    #tablappal {
+        height: 205px;
+    }
+}
+
+/* CSS Media Queries
+/*-----------------------------------------------------------------------------------*/
+
+@media screen and (max-width: 800px) {
+    .swiper-container {
+        width: 100%;
+    }
+    .services_icon {
+        padding: 4.5% 0;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .round_img {
+        padding: 15% 0px;
+    }
+    ul.social li {
+        padding: 6% 0;
+    }
+    .services_icon {
+        padding: 4.3% 0;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .services_icon {
+        padding: 4.5% 0;
+    }
+    #tablappal {
+        height: 95px;
+    }
+    .table_section {
+        font-size: 12px !important;
+    }
+    .table_section_small {
+        font-size: 8px;
+        line-height: 11px;
+        padding: 5px 0 0 2%;
+    }
+}
+
+@media screen and (max-width: 320px) {
+    .borders ul li {
+        padding: 4% 0.1%;
+        width: 27%;
+    }
+}
+
+@media screen and (mix-width: 361px) and (max-width: 480px) {
+    #tablappal {
+        height: 130px;
+    }
+}
+
+@media screen and (mix-width: 480px) and (max-width: 1000px) {
+    #tablappal {
+        height: 205px;
+    }
+}
+
+#divFloat {
+    float: right;
+}

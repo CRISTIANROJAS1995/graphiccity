@@ -1,0 +1,11 @@
+#search {
+   width: 200px;
+}
+
+.main-container{
+    font-size: 1.25rem;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    margin-left: 10px;
+}

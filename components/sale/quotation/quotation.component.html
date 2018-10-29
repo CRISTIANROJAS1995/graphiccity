@@ -1,0 +1,480 @@
+<app-navbar></app-navbar>
+<ngx-loading-bar color='#EBD435' height='6px' diameter='20px'></ngx-loading-bar>
+
+<div class="container main-container">
+
+    <!-- Sección Información del Cliente -->
+    <div class="card">
+
+        <h5 class="card-header">
+            <i class="fas fa-user-tag"></i>&nbsp;Información del Cliente</h5>
+        <div class="card-body">
+
+            <!-- Filtro de busqueda de cliente -->
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="input-group mb-3">
+
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroup-sizing-default">Dato de Busqueda</span>
+                        </div>
+
+                        <input type="text" name="filterInfClient" (keyup.enter)="getListFilterClients(modelCustomerInformation.filterInfClient)"
+                            [(ngModel)]="modelCustomerInformation.filterInfClient" class="form-control" aria-label="Sizing example input"
+                            aria-describedby="inputGroup-sizing-default">
+
+                        <button type="button" class="btn btn-info" (click)="getListFilterClients(modelCustomerInformation.filterInfClient)"
+                            data-toggle="tooltip" data-placement="bottom" title="Buscar">
+                            <i class="fas fa-search"></i>
+                        </button>
+
+                        &nbsp;
+
+                        <button type="button" class="btn btn-danger" data-toggle="tooltip" *ngIf="validselectClient"
+                            (click)="clearDataClient()" data-placement="bottom" title="Limpiar">
+                            <i class="fas fa-eraser"></i>
+                        </button>
+
+                    </div>
+                </div>
+            </div>
+
+            <br>
+
+            <!-- Tabla de registros encontrados en busqueda -->
+            <table class="table table-borderless table-hover table-responsive-sm" *ngIf="listCustomerInformation.length > 0 && !validselectClient">
+                <caption>
+                    <i class="fas fa-archive"></i>&nbsp;Total Registros: {{ listCustomerInformation.length }}</caption>
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Identificación</th>
+                        <th scope="col">Cliente</th>
+                        <th scope="col">Dirección</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Tel Fijo</th>
+                        <th scope="col">Tel Móvil</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let item of listCustomerInformation; let i=index" (click)="selectClient(item.identificationNumber)">
+                        <th scope="row">{{ i + 1 }}</th>
+                        <td>{{ item.identificationNumber }}</td>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.address }}</td>
+                        <td>{{ item.email }}</td>
+                        <td>{{ item.phone }}</td>
+                        <td>{{ item.cellphone }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <br>
+
+            <!-- Información del Cliente -->
+            <fieldset disabled *ngIf="validselectClient">
+                <form>
+
+                    <div class="form-row">
+
+                        <div class="form-group col-md-4">
+                            <label for="identificationType">Tipo de Identificación</label>
+                            <input type="text" [(ngModel)]="modelCustomerInformation.identificationType" name="identificationType"
+                                class="form-control">
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="identificationNumber">Identificación / Nit</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">#</div>
+                                </div>
+                                <input type="number" [(ngModel)]="modelCustomerInformation.identificationNumber" name="identificationNumber"
+                                    class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="address">Dirección</label>
+                            <input type="text" [(ngModel)]="modelCustomerInformation.address" name="address" class="form-control">
+                        </div>
+
+                    </div>
+
+                    <div class="form-row">
+
+                        <div class="form-group col-md-8">
+                            <label for="name">Cliente / Razón Social</label>
+                            <input type="text" [(ngModel)]="modelCustomerInformation.name" name="name" class="form-control">
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="email">Email</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">@</div>
+                                </div>
+                                <input type="text" [(ngModel)]="modelCustomerInformation.email" name="email" class="form-control">
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="form-row">
+
+                        <div class="form-group col-md-4">
+                            <label for="phone">Teléfono Fijo</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">#</div>
+                                </div>
+                                <input type="number" [(ngModel)]="modelCustomerInformation.phone" name="phone" class="form-control">
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label for="cellphone">Teléfono Móbil</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <div class="input-group-text">#</div>
+                                </div>
+                                <input type="number" [(ngModel)]="modelCustomerInformation.cellphone" name="cellphone"
+                                    class="form-control">
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </fieldset>
+
+        </div>
+    </div>
+    <br>
+
+    <!-- Sección Producto -->
+    <div class="card" *ngIf="validselectClient">
+
+        <h5 class="card-header">
+            <i class="fas fa-pencil-ruler"></i>&nbsp;Producto</h5>
+        <div class="card-body">
+
+            <!-- Filtro de busqueda de Producto -->
+            <form [formGroup]="frmProduct">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="input-group mb-3">
+
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="inputGroup-sizing-default">Buscar producto</span>
+                            </div>
+
+                            <input type="text" (keyup.enter)="getListFilterProducts(searchProduct)" formControlName="searchProduct"
+                                [(ngModel)]="searchProduct" required class="form-control" aria-label="Sizing example input"
+                                aria-describedby="inputGroup-sizing-default">
+
+                            <button type="button" class="btn btn-info" (click)="getListFilterProducts(searchProduct)"
+                                data-toggle="tooltip" data-placement="bottom" title="Buscar">
+                                <i class="fas fa-search"></i>
+                            </button>
+
+                        </div>
+
+                    </div>
+                </div>
+
+            </form>
+
+            <!-- Proceso de seleccion de productos -->
+            <form>
+
+                <!-- Tabla de registros encontrados en busqueda -->
+                <table class="table table-borderless table-hover table-responsive-sm" *ngIf="responseProduct.length > 0 && !validSelectProduct">
+                    <caption>
+                        <i class="fas fa-archive"></i>&nbsp;Total Registros: {{ responseProduct.length }}</caption>
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">Nombre</th>
+                            <th scope="col">Cantidad</th>
+                            <th scope="col">Tipo Papel</th>
+                            <th scope="col">Tamaño Papel</th>
+                            <th scope="col">Tamaño Corte</th>
+                            <th scope="col">Tipo Impresión</th>
+                            <th scope="col">Selección</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <tr *ngFor="let item of responseProduct; let i=index">
+
+                            <th scope="row">{{ i + 1 }}</th>
+                            <td>{{ item.name }}</td>
+
+                            <td>
+                                <input style="width: 80px;" (keypress)="keyPressNumber($event)" type="tel" class="form-control"
+                                    minlength="1" name="item.amount" [(ngModel)]="item.amount" maxlength="4"
+                                    placeholder="#">
+                            </td>
+
+                            <td>
+                                <select style="width: 180px;" class="form-control" name="item.typePaper" [(ngModel)]="item.typePaper">
+                                    <option value="">-- Seleccione-- </option>
+                                    <option *ngFor="let item of listPricePaper" value="{{ item.id }}">{{ item.name }} -
+                                        {{ item.gramaje }}g</option>
+                                </select>
+                            </td>
+
+                            <td>
+                                <select style="width: 150px;" class="form-control" name="item.typePaperSize"
+                                    [(ngModel)]="item.typePaperSize">
+                                    <option value="">-- Seleccione-- </option>
+                                    <option value="1">70x100</option>
+                                    <option value="2">60x90</option>
+                                </select>
+                            </td>
+
+                            <td>
+                                <div class="input-group">
+
+                                    <input style="width: 50px;" type="tel" name="item.valueX" minlength="1" maxlength="3"
+                                        (keypress)="keyPressNumber($event)" [(ngModel)]="item.valueX" class="form-control"
+                                        placeholder="X">
+
+                                    <input style="width: 50px;" type="tel" minlength="1" maxlength="2" (keypress)="keyPressNumber($event)"
+                                        name="item.valueY" [(ngModel)]="item.valueY" class="form-control" placeholder="Y">&nbsp;&nbsp;
+                                </div>
+                            </td>
+                            <td>
+                                <div class="input-group">
+
+                                    <input style="width: 50px;" type="tel" name="item.valuePrintX" minlength="1"
+                                        maxlength="3" (keypress)="keyPressNumber($event)" [(ngModel)]="item.valuePrintX"
+                                        class="form-control"><i class="fas fa-times" style="margin-top: 10px"></i>&nbsp;
+
+                                    <input style="width: 50px;" type="tel" minlength="1" maxlength="2" (keypress)="keyPressNumber($event)"
+                                        name="item.valuePrintY" [(ngModel)]="item.valuePrintY" class="form-control">
+
+                                </div>
+                            </td>
+
+                            <td>
+                                <button type="button" (click)="selectProduct(item)" [disabled]="!item.amount || !item.typePaper || !item.typePaperSize || !item.valueY || !item.valueX || !item.valuePrintY || !item.valuePrintX"
+                                    class="btn btn-outline-success"><i class="far fa-check-circle"></i></button>
+                            </td>
+
+                        </tr>
+
+                    </tbody>
+                </table>
+
+                <!-- Tabla de productos a cotizar -->
+                <table class="table table-borderless table-hover table-responsive{-sm|-md|-lg|-xl}" *ngIf="viewQuotation.length > 0">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">Item</th>
+                            <th scope="col">Detalle</th>
+                            <th scope="col">Cantidad</th>
+                            <th scope="col">Tipo Valor</th>
+                            <th scope="col">Valor</th>
+                            <th scope="col">% Comisión</th>
+                            <th scope="col">Valor Total</th>
+                            <th scope="col">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        <div class="container" *ngIf="viewQuotation.length == 0">
+                            <small class="text-muted">
+                                <i class="fas fa-ban"></i>&nbsp;No hay registros
+                            </small>
+                        </div>
+
+                        <tr *ngFor="let foo of viewQuotation; let i = index">
+
+                            <th scope="row">{{ i + 1 }}</th>
+                            <td>
+                                {{ foo.name }}&nbsp;<strong>{{ foo.deserializeAttributes.Tamano }}</strong>
+                            </td>
+                            <td>
+                                <input style="width: 80px;" type="tel" (blur)="foo.validInsertAmount = 1" *ngIf="!foo.validInsertAmount"
+                                    class="form-control" min="1" minlength="1" maxlength="3" pattern="^[0-9]+([,][0-9]+)?$"
+                                    name="foo.amount" [(ngModel)]="foo.amount" placeholder="#">
+                                <strong *ngIf="foo.validInsertAmount">{{ foo.amount }}</strong>
+                            </td>
+
+                            <!-- Sistema de Exhibición 1 -->
+                            <td *ngIf="foo.productType == 1">
+
+                                <select style="width: 150px;" *ngIf="!foo.validInsertSaleValue" (blur)="foo.validInsertSaleValue = 1"
+                                    class="form-control" name="foo.sale_value" [(ngModel)]="foo.sale_value">
+
+                                    <option value="{{ foo.deserializeAttributes.Local }}">Local - {{
+                                        foo.deserializeAttributes.Local
+                                        | currency }}</option>
+                                    <option value="{{ foo.deserializeAttributes.ConImpresion }}">Con Impresion - {{
+                                        foo.deserializeAttributes.ConImpresion
+                                        | currency }}</option>
+                                    <option value="{{ foo.deserializeAttributes.ValorEstructura }}">Valor Estructura -
+                                        {{
+                                        foo.deserializeAttributes.ValorEstructura | currency }}</option>
+
+                                </select>
+
+                                <strong *ngIf="foo.validInsertSaleValue">{{ foo.sale_value | currency }}</strong>
+                            </td>
+
+                            <!-- Gran Formato 1 -->
+                            <td *ngIf="foo.productType == 2">
+
+                                <select style="width: 150px;" *ngIf="!foo.validInsertSaleValue" (blur)="foo.validInsertSaleValue = 1"
+                                    class="form-control" name="foo.sale_value" [(ngModel)]="foo.sale_value">
+
+                                    <option value="{{ foo.deserializeAttributes.Local }}">Local - {{
+                                        foo.deserializeAttributes.Local
+                                        | currency }}</option>
+                                    <option value="{{ foo.deserializeAttributes.ConImpresion }}">Con Impresion - {{
+                                        foo.deserializeAttributes.ConImpresion
+                                        | currency }}</option>
+                                    <option value="{{ foo.deserializeAttributes.CalculoValorMetros.valor }}">Valor
+                                        Metros
+                                        - {{ foo.deserializeAttributes.CalculoValorMetros.valor | currency }}</option>
+                                </select>
+
+                                <strong *ngIf="foo.validInsertSaleValue">{{ foo.sale_value | currency }}</strong>
+                            </td>
+
+                            <!-- Oficina 1 -->
+                            <td *ngIf="foo.productType == 3">
+
+                                <select style="width: 150px;" *ngIf="!foo.validInsertSaleValue" (blur)="foo.validInsertSaleValue = 1"
+                                    class="form-control" name="foo.sale_value" [(ngModel)]="foo.sale_value">
+
+                                    <option value="{{ foo.deserializeAttributes.ValorUnaTinta.ValorUnit }}">Valor Una
+                                        Tinta
+                                        - {{ foo.deserializeAttributes.ValorUnaTinta.ValorUnit | currency }}</option>
+                                    <option value="{{ foo.deserializeAttributes.ValorFullColor.ValorUnit }}">Valor Full
+                                        Color
+                                        - {{ foo.deserializeAttributes.ValorFullColor.ValorUnit | currency }}</option>
+
+                                </select>
+
+                                <strong *ngIf="foo.validInsertSaleValue">{{ foo.sale_value | currency }}</strong>
+                            </td>
+
+                            <!-- Oficina 2 - Jugeteria 1 -->
+                            <td *ngIf="foo.productType == 4 || foo.productType == 8">
+
+                                <select style="width: 150px;" *ngIf="!foo.validInsertSaleValue" (blur)="foo.validInsertSaleValue = 1"
+                                    class="form-control" name="foo.sale_value" [(ngModel)]="foo.sale_value">
+
+                                    <option value="{{ foo.deserializeAttributes.Valor }}">Valor - {{
+                                        foo.deserializeAttributes.Valor
+                                        | currency }}</option>
+
+                                </select>
+
+                                <strong *ngIf="foo.validInsertSaleValue">{{ foo.sale_value | currency }}</strong>
+                            </td>
+
+                            <!-- Textil 1 - Mugs 1 -->
+                            <td *ngIf="foo.productType == 5 || foo.productType == 6">
+
+                                <select style="width: 150px;" *ngIf="!foo.validInsertSaleValue" (blur)="foo.validInsertSaleValue = 1"
+                                    class="form-control" name="foo.sale_value" [(ngModel)]="foo.sale_value">
+
+                                    <option value="{{ foo.deserializeAttributes.ValorUnitario }}">Valor Unitarío - {{
+                                        foo.deserializeAttributes.ValorUnitario
+                                        | currency }}</option>
+                                </select>
+
+                                <strong *ngIf="foo.validInsertSaleValue">{{ foo.sale_value | currency }}</strong>
+                            </td>
+
+                            <!-- Tampografia 1 -->
+                            <td *ngIf="foo.productType == 7">
+
+                                <select style="width: 150px;" *ngIf="!foo.validInsertSaleValue" (blur)="foo.validInsertSaleValue = 1"
+                                    class="form-control" name="foo.sale_value" [(ngModel)]="foo.sale_value">
+
+                                    <option value="{{ foo.deserializeAttributes.ValorProducto }}">Valor Producto - {{
+                                        foo.deserializeAttributes.ValorProducto
+                                        | currency }}</option>
+                                    <option value="{{ foo.deserializeAttributes.ValorUnaTinta.ValorUnit }}">Valor Una
+                                        Tinta
+                                        - {{ foo.deserializeAttributes.ValorUnaTinta.ValorUnit | currency }}</option>
+                                    <option value="{{ foo.deserializeAttributes.ValorDosTinta.ValorUnit }}">Valor Dos
+                                        Tinta
+                                        - {{ foo.deserializeAttributes.ValorDosTinta.ValorUnit | currency }}</option>
+
+                                </select>
+
+                                <strong *ngIf="foo.validInsertSaleValue">{{ foo.sale_value | currency }}</strong>
+                            </td>
+
+                            <td>
+                                <strong>{{ (foo.amount * foo.sale_value) | currency }}</strong>
+                            </td>
+
+                            <td>
+                                <input style="width: 150px;" type="number" (blur)="foo.validInsertPercentage = 1" *ngIf="!foo.validInsertPercentage"
+                                    class="form-control" min="1" pattern="^[0-9]+([,][0-9]+)?$" name="foo.percentage_profit"
+                                    [(ngModel)]="foo.percentage_profit" placeholder="#">
+                                <strong *ngIf="foo.validInsertPercentage">% {{ foo.percentage_profit }}</strong>
+                            </td>
+
+                            <td>
+                                <strong>{{ ( (foo.amount * foo.sale_value) + ( ((foo.amount * foo.sale_value) *
+                                    foo.percentage_profit) / 100 ) ) | currency }}</strong>
+                            </td>
+
+                            <td>
+                                <button type="button" (click)="foo.amount = null; foo.percentage_profit = null; foo.validInsertPercentage = 0; foo.validInsertAmount = 0; foo.validInsertSaleValue = 0; foo.sale_value = null; "
+                                    class="btn btn-info" data-toggle="tooltip" data-placement="bottom" title="Editar">
+                                    <i class="fas fa-edit"></i>
+                                </button>&nbsp;
+
+                                <button type="button" (click)="deleteQuotationProduct(i)" class="btn btn-danger"
+                                    data-toggle="tooltip" data-placement="bottom" title="Eliminar">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        <br>
+
+                        <!-- Total Cotización -->
+                        <tr *ngIf="viewQuotation.length > 0">
+                            <th scope="row"></th>
+                            <td colspan="5"></td>
+                            <td>
+                                <h5>Total:</h5>
+                            </td>
+                            <td><strong>
+                                    <h4>{{ totQuotation() | currency }}</h4>
+                                </strong></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+
+            </form>
+
+        </div>
+    </div>
+    <br>
+
+    <!-- Acciones Cotización -->
+    <div class="card" *ngIf="viewQuotation.length > 0">
+
+        <h5 class="card-header">
+            <i class="fas fa-share-square"></i>&nbsp;Acciones Cotización</h5>
+        <div class="card-body">
+            <div class="row row-buttons">
+                <button type="button" (click)="sendEmail()" class="btn btn-outline-info"><i class="fas fa-share-square"></i>&nbsp;Enviar
+                    Email</button>&nbsp;&nbsp;
+                <button type="button" (click)="submitCuotation()" class="btn btn-outline-info"><i class="fas fa-save"></i>&nbsp;Guardar</button>
+            </div>
+        </div>
+    </div>
+    <br>
+
+</div>

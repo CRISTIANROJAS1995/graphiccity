@@ -1,0 +1,43 @@
+<ngx-loading-bar color='#EBD435' height='5px' diameter='20px'></ngx-loading-bar>
+
+<div class="limiter">
+    <div class="container-login100" style="background-image: url('../../../assets/images/bgLogin.jpg');">
+        <div class="wrap-login100 p-t-30 p-b-50">
+            <span class="login100-form-title p-b-41">
+                Ingreso de usuario
+            </span>
+            <form [formGroup]="userForm" (ngSubmit)="checkFunction()" *ngIf="!submitted" class="login100-form validate-form p-b-33 p-t-5">
+
+                <div class="wrap-input100 validate-input " data-validate="Ingrese el usuario">
+                    <input class="input100 " type="text" formControlName="user" required placeholder="Usuario">
+                    <span class="focus-input100 fas fa-user" data-placeholder="&#xF007;"></span>
+                </div>
+
+                <div class="wrap-input100 validate-input" data-validate="Ingrese contraseña">
+                    <input class="input100" type="password" formControlName="password" placeholder="Contraseña">
+                    <span class="focus-input100 fas fa-lock" data-placeholder="&#xF023;"></span>
+                </div>
+
+
+                <div class="container-login100-form-btn m-t-32">
+                    <ngx-recaptcha2 #captchaElem [size]="size" [hl]="lang" [theme]="theme" [type]="type" (expire)="HideSubmit()"
+                        (load)="HideSubmit()" (success)="ShowSubmit($event)">
+                    </ngx-recaptcha2>
+                    
+                    <br>
+
+                    <button *ngIf="showSubmit" class="btn btn-info" style="width: 50%;">
+                        Ingresar
+                    </button>
+
+                    <br>
+
+                    <a href="/#/rememberpassword" class="container-login100-form-btn m-t-32">Olvide mi contraseña</a>
+                    <br>
+
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>

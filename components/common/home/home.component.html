@@ -1,0 +1,24 @@
+<app-navbar></app-navbar>
+
+<div class="container ">
+  <span class="navbar-text">
+    Hola! <strong>{{ userData.name }}.</strong>
+  </span>
+</div>
+
+<div class="container my-5">
+
+  <h3 class="text-danger">Dashboard</h3>
+  <div>
+    <div>
+      <canvas width="5" height="5"
+            baseChart 
+            [datasets]="barChartData" 
+            [labels]="barChartLabels" 
+            [options]="barChartOptions" 
+            [legend]="barChartLegend"
+            [chartType]="barChartType"></canvas>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,338 @@
+<div class="modal-header">
+  <h4 class="modal-title"><i class="fas fa-chalkboard-teacher"></i>&nbsp;Proceso de Montaje</h4>
+  <button type="button" class="close" aria-label="Close" (click)="activeModal.dismiss('Cross click')">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="modal-body">
+
+  <!-- Seccción Pedido de Papel -->
+  <div class="card">
+    <div class="card-header">
+      <i class="fas fa-paperclip"></i>&nbsp;PEDIDO DE PAPEL
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">Corte de Papel</h5>
+
+      <blockquote>Permite calcular los cortes un pliego de papel al
+        cortarlo a la medida deseada. Introduce primero las medidas del papel a cortar y luego las medidas que
+        requieres. Respetando lado mayor y lado menor.</blockquote>
+
+      <hr>
+      <form>
+
+        <h6 class="card-title">Tamaño Del Pliego</h6>
+        <div class="form-row">
+
+          <div class="form-group col-md-3">
+            <label>Papel Lado Mayor</label>
+            <input type="number" name="objMed.pLadoMayor" [(ngModel)]="objMed.pLadoMayor" class="form-control" readonly
+              placeholder="#">
+          </div>
+
+          <div class="form-group col-md-3">
+            <label>Papel lado Menor</label>
+            <input type="number" name="objMed.pLadoMenor" [(ngModel)]="objMed.pLadoMenor" class="form-control" readonly
+              placeholder="#">
+          </div>
+
+
+        </div>
+
+        <hr>
+
+        <h6 class="card-title">Tamaño Del Corte</h6>
+        <div class="form-row">
+
+          <div class="form-group col-md-3">
+            <label>Papel Lado Mayor</label>
+            <input type="number" name="objMed.cLadoMayor" [(ngModel)]="objMed.cLadoMayor" class="form-control" readonly
+              placeholder="#">
+          </div>
+
+          <div class="form-group col-md-3">
+            <label>Papel lado Menor</label>
+            <input type="number" name="objMed.cLadoMenor" [(ngModel)]="objMed.cLadoMenor" class="form-control" readonly
+              placeholder="#">
+          </div>
+
+        </div>
+
+      </form>
+
+      <div id="tablaf" class="services_icon" style="width: 100%;">
+
+        <div id='altog'>{{ tablafAlto }}</div>
+
+        <table class='tablappal' [style.height.px]="af" style='max-width:100% !important;' *ngIf="grafica_f == 1">
+          <tr>
+            <td>
+              <table style='width:100%;height:100%;' class='tablasec' [innerHTML]='tablasec'></table>
+            </td>
+          </tr>
+        </table>
+
+        <table id='tablappal' [style.height.px]="af" style='max-width:100% !important;' *ngIf="grafica_f == 2">
+          <tr [style.height.%]="auxalto">
+            <td [style.width.%]="an">
+              <table style='width:83%;height:100%;' class='tablasec' [innerHTML]='tablasec'>
+              </table>
+            </td>
+          </tr>
+          <tr>
+            <td>
+              <table style='width:77%;height:100%;' class='tablasec' [innerHTML]='tablasec2'>
+              </table>
+            </td>
+          </tr>
+        </table>
+
+        <table id='tablappal' [style.height.px]="af" style='max-width:100% !important;' *ngIf="grafica_f == 3">
+          <tr>
+            <td [style.width.%]="an">
+              <table style='width:100%;height:58%;' class='tablasec'>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                </tr>
+              </table>
+            </td>
+            <td>
+              <table style='width:100%;height:100%;' class='tablasec'>
+
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                </tr>
+
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                </tr>
+                <tr>
+                  <td>&nbsp;</td>
+                  <td>&nbsp;</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+
+        <div id='anchog'>{{ tablafAncho }}</div>
+
+      </div>
+
+      <div>
+        <dl>
+          <dt>No. Tamaños</dt>
+          <dd>{{ total1 }}</dd>
+          <dt>Área Utilizada</dt>
+          <dd>{{ pu }}%</dd>
+          <dt>Área Desperdiciada</dt>
+          <dd>{{ pd }}%</dd>
+          <dt>Pliegos</dt>
+          <dd>{{ valueTotPleg }}</dd>
+        </dl>
+      </div>
+
+      <div class="row">
+        <div class="col">
+          <div style="margin-top: 2%">
+            <dl>
+              <dt>
+                <h5>Subtotal: {{ valueTotPaper | currency }}</h5>
+              </dt>
+            </dl>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Seccción Impresión -->
+  <div class="card">
+    <div class="card-header">
+      <i class="fas fa-print"></i>&nbsp;IMPRESION
+    </div>
+    <div class="card-body">
+      <div id="printContainer" class="container">
+
+        <div class="row">
+          <div class="col">
+            <div style="padding-top: 15%;">
+              <h6 class="card-title">Producto</h6>
+              <select class="form-control" [(ngModel)]="objPrint.valueProduct" (change)="calcPrint(objPrint.valueProduct, objPrint.typeInk)"
+                name="objPrint.valueProduct">
+
+                <option value="0" selected>-- Seleccione --</option>
+                <option value="1">Gto 52</option>
+                <option value="2">Speed 525</option>
+                <option value="3">Speed 745</option>
+                <option value="4">Pliego</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col">
+            <div style="padding-top: 15%;">
+              <h6 class="card-title">Tipo Tinta</h6>
+              <select class="form-control" (change)="calcPrint(objPrint.valueProduct, objPrint.typeInk)" [(ngModel)]="objPrint.typeInk"
+                name="objPrint.typeInk" [disabled]="!objPrint.valueProduct">
+
+                <option selected>-- Seleccione --</option>
+                <option value="1">Normal</option>
+                <option value="2">Especial</option>
+                <option value="3">Policromía</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="row">
+              <div class="col">
+                <h6 class="card-title" style="padding-left: 40%">Millares</h6>
+                <input type="tel" class="form-control" (keypress)="keyPressNumber($event)" style="border-left-width: 1px; text-align: center; margin-left: 130px; margin-right: 50px; border-right-width: 1px; width: 60px;"
+                  [(ngModel)]="objPrint.valueMillar" name="objPrint.valueMillar" disabled>
+              </div>
+            </div>
+            <div class="row">
+              <h6 class="card-title" style="padding-left: 155px; padding-top: 10px; margin-bottom: 0px;">Tintas</h6>
+            </div>
+            <div class="row">
+              <div class="col-5" style="margin-left: 4%">
+                <i style="margin-left: 30%">Cara 1</i>
+                <input type="tel" class="form-control" style="text-align: center;" minlength="1" (keypress)="keyPressNumber($event)" [(ngModel)]="objPrint.valuePrintX"
+                  name="objPrint.valuePrintX" disabled>
+              </div>
+              <div>
+                <i class="fas fa-times" style="margin-top: 33px;margin-left: 6px;"></i>
+              </div>
+              <div class="col-5">
+                <i style="margin-left: 30%">Cara 2</i>
+                <input type="tel" class="form-control" style="text-align: center;" minlength="1" (keypress)="keyPressNumber($event)" [(ngModel)]="objPrint.valuePrintY"
+                  name="objPrint.valuePrintY" disabled>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <div style="margin-top: 2%">
+              <dl>
+                <dt>
+                  <h5>Subtotal: {{ objPrint.subTotal | currency }}</h5>
+                </dt>
+              </dl>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- Seccción Acabados -->
+  <div class="card">
+    <div class="card-header">
+      <i class="fas fa-print"></i>&nbsp;ACABADOS
+    </div>
+    <div class="card-body">
+      <div class="container">
+
+        <div class="row">
+
+          <div class="col">
+            <h6 class="card-title">Acabado</h6>
+
+            <select class="form-control" [(ngModel)]="objTypeAcab.name" name="objTypeAcab.valueProduct">
+              <option value="0" selected>-- Seleccione --</option>
+              <option *ngFor="let item of typeFinishes" value="{{ item.id }}">{{ item.name }} - {{ item.format }}</option>
+            </select>
+
+          </div>
+
+          <div class="col">
+            <button (click)="addFinishes(objTypeAcab.name)" style="margin-top:30px;" title="Adicionar" type="button" class="btn btn-outline-success"><i class="fas fa-plus-circle"></i></button>
+          </div>
+
+        </div>
+
+        <br>
+        <br>
+
+        <!-- Tabla de acabados -->
+        <table class="table table-borderless table-hover table-responsive-sm" *ngIf="finishes.length > 0">
+          <caption>
+            <i class="fas fa-archive"></i>&nbsp;Total Registros: {{ finishes.length }}</caption>
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Nombre</th>
+              <th scope="col"># Millar</th>
+              <th scope="col"># Hoja</th>
+              <th scope="col"># Minimo</th>
+              <th scope="col"># Total</th>
+              <th scope="col">Acción</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let item of finishes; let i=index">
+
+              <th scope="row">{{ i + 1 }}</th>
+              <td>{{ item.name }} &nbsp; {{ item.format }}</td>
+              <td>{{ item.valueMillar | currency }}</td>
+              <td>{{ item.valueSheet | currency }}</td>
+              <td>{{ item.valueMin | currency }}</td>
+              <td>{{ item.total | currency }}</td>
+
+              <td>
+                <button type="button" (click)="deleteFinishes(i)" class="btn btn-danger" data-toggle="tooltip"
+                  data-placement="bottom" title="Eliminar">
+                  <i class="fas fa-trash-alt"></i>
+                </button>
+
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="row">
+          <div class="col">
+            <div style="margin-top: 2%">
+              <dl>
+                <dt>
+                  <h5>Subtotal: {{ totFinishes() | currency }}</h5>
+                </dt>
+              </dl>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-footer">
+    <div id="divFloat">
+
+    </div>
+  </div>
+
+  <button type="button" class="btn btn-outline-dark" (click)="activeModal.close('Close click')">Close</button>
+
+</div>

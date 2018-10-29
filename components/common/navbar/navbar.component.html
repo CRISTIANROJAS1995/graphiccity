@@ -1,0 +1,41 @@
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand main-container" [routerLink]="['/home']">
+      <img src="/assets/images/logo graphiccity.png" width="40" height="40" class="d-inline-block align-center" alt="">Graphic
+      City
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+      <ul class="navbar-nav  ml-auto mr-3">
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link main-container" [routerLink]="['/home']">
+            <i class="fas fa-home"></i>&nbsp;Inicio
+          </a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link main-container" [routerLink]="['/quatation']">
+            <i class="fas fa-briefcase"></i>&nbsp;Cotización
+          </a>
+        </li>
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link main-container" [routerLink]="['/programmer']">
+            <i class="fas fa-briefcase"></i>&nbsp;Programador
+          </a>
+        </li>
+
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link main-container" [routerLink]="['']" title="Salir">
+            <i class="fas fa-sign-out-alt"></i>&nbsp;Salir
+          </a>
+        </li>
+
+      </ul>
+
+    </div>
+  </div>
+</nav>
